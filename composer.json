@@ -1,0 +1,14 @@
+{
+  "name": "webmans/tntjwt",
+  "type": "library",
+  "license": "MIT",
+  "description": "Webman plugin webmans/tntjwt",
+  "require": {
+    "firebase/php-jwt": "^6.3"
+  },
+  "autoload": {
+    "psr-4": {
+      "Webmans\\Tntjwt\\": "src"
+    }
+  }
+}
