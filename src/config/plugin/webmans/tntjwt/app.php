@@ -1,8 +1,8 @@
 <?php
 return [
     'enable' => true,//启用
-    'key' => '123456',//加密·密钥
-    'field' => ["id","username"],//允许存入的字段 
+    'key' => 'base68:N721v3Gt2I58HH7oiU7a70PQ+i8ekPWRqwI+JSnM1wo=',//加密·密钥
+    'field' => ['id','username','roleId','upid','google','sub','subID'],//允许存入的字段 
     'iss' => 'http://www.baidu.com',//令牌签发者
-    'exp' => 60 //令牌有效期 
+    'exp' => 86400 //令牌有效期 
 ];

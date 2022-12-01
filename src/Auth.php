@@ -6,9 +6,11 @@ namespace Webmans\Tntjwt;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 use Webmans\Tntjwt\Exception\TntException;
+
 use Firebase\JWT\SignatureInvalidException;
-
-
+use Firebase\JWT\BeforeValidException;
+use Firebase\JWT\ExpiredException; 
+use UnexpectedValueException;
 
 class Auth{ 
     
@@ -17,10 +19,10 @@ class Auth{
         $key = config('plugin.webmans.tntjwt.app.key'); //key  
         $Authorization = request()->header('Authorization', ''); 
         if(empty($Authorization)){
-            throw new tntException('请求头缺少Authorization');  
+            return null; 
         }
          if(strpos($Authorization,'Bearer ') === false){
-             throw new tntException('Authorization中缺少：Bearer '); 
+             return null;
          }
         
         $token = str_replace("Bearer ","",$Authorization);
@@ -28,10 +30,27 @@ class Auth{
         
         try {
             $decoded = JWT::decode($token, new Key($key, 'HS256')); 
-            return $decoded->extend;//返回令牌内的数据
-            
-        }catch (SignatureInvalidException $e){
-            throw new tntException("jwt读取数据失败:".$e->getMessage()); 
+            return $decoded->extend;//返回令牌内的数据 
+        } catch(SignatureInvalidException $e) {
+            echo "\nJwt-user:身份验证令牌无效\n";
+            return null;
+            #throw new TntException('身份验证令牌无效',401);
+        }catch(BeforeValidException $e) { // 签名在某个时间点之后才能用
+            echo "\nJwt-user:身份验证令牌尚未生效\n";
+            return null;
+            #throw new TntException('身份验证令牌尚未生效',403);
+        }catch(ExpiredException $e) { // token过期
+            echo "\nJwt-user:身份验证会话已过期，请重新登录！\n";
+            return null;
+            #throw new TntException('身份验证会话已过期，请重新登录！',402);
+        } catch (UnexpectedValueException $unexpectedValueException) {
+            echo "\nJwt-user:获取扩展字段不正确\n";
+            return null;
+            #throw new TntException('获取扩展字段不正确',401);
+        } catch (\Exception $exception) {
+            echo "\nJwt-user:".$exception->getMessage()."\n";
+            return null;
+            #throw new TntException($exception->getMessage(),401);
         }
             
     }
@@ -68,19 +87,20 @@ class Auth{
         
         try {
             $basePayload = [
-            'iss' => 'http://www.yintaipay.com',
+            'iss' => $iss,
             'iat' => time(),  
-            'exp' => time() + 3600, //过期时间
+            'exp' => time() + $exp, //过期时间
             'extend' => $newData
             ];
             
             $encode = JWT::encode($basePayload, $kkey, 'HS256'); 
             return json_decode(json_encode([
             'token_type' => 'Bearer',
-            'expires_in' => 0,
-            'refresh_expires_in' => "",
+            'token_md5' => md5('Bearer '.$encode), 
+            'expires_in' => time() + $exp,
+            'refresh_expires_in' => "未支持",
             'access_token' => $encode,
-            'refresh_token' => "",
+            'refresh_token' => "未支持",
         ]));
             return $encode;  
         }catch (SignatureInvalidException $e){
