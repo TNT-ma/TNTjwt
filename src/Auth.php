@@ -1,11 +1,11 @@
 <?php
 
 declare(strict_types=1);
-namespace Webmans\Tntjwt;
+namespace Tntma\Tntjwt;
 
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
-use Webmans\Tntjwt\Exception\TntException;
+use Tntma\Tntjwt\Exception\TntException;
 
 use Firebase\JWT\SignatureInvalidException;
 use Firebase\JWT\BeforeValidException;
@@ -16,7 +16,7 @@ class Auth{
     
     public static  function user($cache = false) {  
         
-        $key = config('plugin.webmans.tntjwt.app.key'); //key  
+        $key = config('plugin.Tntma.tntjwt.app.key'); //key  
         $Authorization = request()->header('Authorization', ''); 
         if(empty($Authorization)){
             return null; 
@@ -56,10 +56,10 @@ class Auth{
     }
     
     public static  function login($data){
-        $fields = config('plugin.webmans.tntjwt.app.field'); //允许使用的数据
-        $kkey = config('plugin.webmans.tntjwt.app.key'); //key  
-        $exp = config('plugin.webmans.tntjwt.app.exp'); //key 
-        $iss = config('plugin.webmans.tntjwt.app.iss'); //key 
+        $fields = config('plugin.Tntma.tntjwt.app.field'); //允许使用的数据
+        $kkey = config('plugin.Tntma.tntjwt.app.key'); //key  
+        $exp = config('plugin.Tntma.tntjwt.app.exp'); //key 
+        $iss = config('plugin.Tntma.tntjwt.app.iss'); //key 
         
          
         if(count($fields) > 0){

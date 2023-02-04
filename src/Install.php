@@ -1,5 +1,5 @@
 <?php
-namespace Webmans\Tntjwt;
+namespace Tntma\Tntjwt;
 
 class Install
 {
@@ -9,7 +9,7 @@ class Install
      * @var array
      */
     protected static $pathRelation = array (
-  'config/plugin/webmans/tntjwt' => 'config/plugin/webmans/tntjwt',
+  'config/plugin/Tntma/tntjwt' => 'config/plugin/Tntma/tntjwt',
 );
 
     /**

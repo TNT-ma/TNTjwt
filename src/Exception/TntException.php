@@ -1,5 +1,5 @@
 <?php 
-namespace Webmans\Tntjwt\Exception;
+namespace Tntma\Tntjwt\Exception;
 
 
 class TntException extends \RuntimeException
