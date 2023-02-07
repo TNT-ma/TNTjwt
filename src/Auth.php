@@ -16,7 +16,7 @@ class Auth{
     
     public static  function user($cache = false) {  
         
-        $key = config('plugin.Tntma.tntjwt.app.key'); //key  
+        $key = config('plugin.TNTma.tntjwt.app.key'); //key  
         $Authorization = request()->header('Authorization', ''); 
         if(empty($Authorization)){
             return null; 
@@ -56,10 +56,10 @@ class Auth{
     }
     
     public static  function login($data){
-        $fields = config('plugin.Tntma.tntjwt.app.field'); //允许使用的数据
-        $kkey = config('plugin.Tntma.tntjwt.app.key'); //key  
-        $exp = config('plugin.Tntma.tntjwt.app.exp'); //key 
-        $iss = config('plugin.Tntma.tntjwt.app.iss'); //key 
+        $fields = config('plugin.TNTma.tntjwt.app.field'); //允许使用的数据
+        $kkey = config('plugin.TNTma.tntjwt.app.key'); //key  
+        $exp = config('plugin.TNTma.tntjwt.app.exp'); //key 
+        $iss = config('plugin.TNTma.tntjwt.app.iss'); //key 
         
          
         if(count($fields) > 0){

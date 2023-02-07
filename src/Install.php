@@ -9,7 +9,7 @@ class Install
      * @var array
      */
     protected static $pathRelation = array (
-  'config/plugin/Tntma/tntjwt' => 'config/plugin/Tntma/tntjwt',
+  'config/plugin/TNTma/tntjwt' => 'config/plugin/TNTma/tntjwt',
 );
 
     /**
